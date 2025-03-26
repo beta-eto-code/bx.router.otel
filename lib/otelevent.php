@@ -5,16 +5,16 @@ namespace Bx\Router\Otel;
 class OtelEvent
 {
     private $spanName;
-    private $name;
+    private $eventName;
     private $attributes;
 
     /**
-     * @param $name
+     * @param $eventName
      * @param $attributes
      */
-    public function __construct($name, $attributes, $spanName = 'root')
+    public function __construct($eventName, $attributes, $spanName = 'root')
     {
-        $this->name = $name;
+        $this->eventName = $eventName;
         $this->attributes = $attributes;
         $this->spanName = $spanName;
     }
@@ -23,9 +23,9 @@ class OtelEvent
     /**
      * @return mixed
      */
-    public function getName()
+    public function getEventName()
     {
-        return $this->name;
+        return $this->eventName;
     }
 
     /**
