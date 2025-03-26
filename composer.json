@@ -8,9 +8,22 @@
     }
   ],
   "require": {
+    "beta/bx.otel.base": "dev-develop"
   },
   "version": "0.0.1",
   "require-dev": {
     "php": ">=8.1"
+  },
+  "repositories": [
+    {
+      "url": "https://github.com/beta-eto-code/bx.otel.base",
+      "type": "git"
+    }
+  ],
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true,
+      "tbachert/spi": true
+    }
   }
 }
