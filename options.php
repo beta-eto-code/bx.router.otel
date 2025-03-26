@@ -8,11 +8,10 @@ if (!$USER->IsAdmin()) {
 }
 
 
-
+use Bitrix\Main\Config\Option;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
-use Bitrix\Main\Config\Option;
-use Bx\Otel\Router\ConfigList;
+use Bx\Router\Otel\ConfigList;
 
 $mid = 'bx.router.otel';
 
@@ -28,8 +27,27 @@ $options = [
                 'type' => 'checkbox',
                 'multiple' => false
             ],
+            ConfigList::OTEL_HOST => [
+                'label' => 'Адрес OTEL сервера',
+                'name' => ConfigList::OTEL_HOST,
+                'type' => 'string',
+                'multiple' => false
+            ],
+            ConfigList::OTEL_LOGIN => [
+                'label' => 'Логин OTEL сервера',
+                'name' => ConfigList::OTEL_LOGIN,
+                'type' => 'string',
+                'multiple' => false
+            ],
+
+            ConfigList::OTEL_PASSWORD => [
+                'label' => 'Пароль OTEL сервера',
+                'name' => ConfigList::OTEL_PASSWORD,
+                'type' => 'string',
+                'multiple' => false
+            ],
             ConfigList::OTEL_URLS => [
-                'label' => 'Список URL разрешенных для профилирования (по-умолчанию все разрешены)',
+                'label' => 'Список URL разрешенных для отправки в OTEL (по-умолчанию все разрешены)',
                 'name' => ConfigList::OTEL_URLS,
                 'type' => 'string',
                 'multiple' => true
@@ -55,7 +73,7 @@ foreach ($options as $optionTab) {
                     $optionsMap[] = $name;
                 }
 
-                $multiple = (bool) ($value['multiple'] ?? false);
+                $multiple = (bool)($value['multiple'] ?? false);
                 if ($multiple) {
                     $optionJson[] = $name;
                 }
@@ -128,8 +146,7 @@ $actionUrl = $APPLICATION->GetCurPage() . "?mid=" . urlencode($mid) . "&lang=" .
                 $optionName = $name;
                 $optionLabel = $value;
                 $optionType = "text";
-            }
-            else if (is_array($value)) {
+            } else if (is_array($value)) {
                 $optionGroup = $value['group'] ?? null;
                 if ($optionGroup) {
                     echo "<tr class='heading'><td colspan='2'>{$optionGroup}</td></tr>";
@@ -145,7 +162,7 @@ $actionUrl = $APPLICATION->GetCurPage() . "?mid=" . urlencode($mid) . "&lang=" .
                 $optionLabel = $value['label'] ?? $optionName;
             }
 
-            $optionValue = (string) Option::get($mid, $optionName, $value['default'] ?? "");
+            $optionValue = (string)Option::get($mid, $optionName, $value['default'] ?? "");
             $decodedValue = json_decode($optionValue, true) ?? null;
             if ($decodedValue) {
                 $optionValue = $decodedValue;
@@ -165,7 +182,7 @@ $actionUrl = $APPLICATION->GetCurPage() . "?mid=" . urlencode($mid) . "&lang=" .
                                 range(0, count($selectValues) - 1)
                             ));
 
-                            $multiple = (bool) ($value['multiple'] ?? false);
+                            $multiple = (bool)($value['multiple'] ?? false);
                             $size = 1;
                             if ($multiple) {
                                 $size = 5;
@@ -203,7 +220,7 @@ $actionUrl = $APPLICATION->GetCurPage() . "?mid=" . urlencode($mid) . "&lang=" .
                             echo "<textarea name='{$optionName}' cols='" . ($value['cols'] ?? 30) . "' rows='" . ($value['rows'] ?? 5) . "'>{$optionValue}</textarea>";
                             break;
                         case 'map':
-                            $multiple = (bool) ($value['multiple'] ?? false);
+                            $multiple = (bool)($value['multiple'] ?? false);
                             if ($multiple) {
                                 foreach ((array)$optionValue as $item) {
                                     if (empty($item)) {
@@ -227,7 +244,7 @@ $actionUrl = $APPLICATION->GetCurPage() . "?mid=" . urlencode($mid) . "&lang=" .
                             }
                             break;
                         default:
-                            $multiple = (bool) ($value['multiple'] ?? false);
+                            $multiple = (bool)($value['multiple'] ?? false);
                             if ($multiple) {
                                 $optionName .= "[]";
                                 foreach ($optionValue as $item) {
@@ -263,10 +280,12 @@ $actionUrl = $APPLICATION->GetCurPage() . "?mid=" . urlencode($mid) . "&lang=" .
     .adm-detail-content-cell-l {
         width: 50%;
     }
+
     .adm-detail-content-cell-r select {
         width: auto;
         max-width: 100%;
     }
+
     .adm-detail-content-cell-l,
     .adm-detail-content-cell-r {
         vertical-align: top;
@@ -308,7 +327,7 @@ $actionUrl = $APPLICATION->GetCurPage() . "?mid=" . urlencode($mid) . "&lang=" .
         }
     }
 
-    window.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('DOMContentLoaded', function () {
         let selectAuthType = document.querySelector("select[name='AUTH_TYPE']");
         let usernameInput = document.querySelector("input[name='USERNAME']");
         let passwordInput = document.querySelector("input[name='PASSWORD']");
@@ -336,7 +355,7 @@ $actionUrl = $APPLICATION->GetCurPage() . "?mid=" . urlencode($mid) . "&lang=" .
 
         initState(selectAuthType.value);
 
-        selectAuthType.addEventListener('change', function() {
+        selectAuthType.addEventListener('change', function () {
             initState(this.value);
         });
     });
