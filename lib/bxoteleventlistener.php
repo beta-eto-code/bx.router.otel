@@ -2,6 +2,7 @@
 
 namespace Bx\Router\Otel;
 
+use Bitrix\Main\Config\Option;
 use Bitrix\Main\Event;
 
 class BxOTelEventListener
@@ -12,6 +13,12 @@ class BxOTelEventListener
 
     public static function onOTelEvent(Event $event): void
     {
+        $isEnabled = Option::get('bx.router.otel', ConfigList::USE_OTEL, 'Y') == 'Y';
+
+        if (!$isEnabled) {
+            return;
+        }
+
         /** @var OtelEvent $otelEvent */
         $otelEvent = $event->getParameter(self::EVENT_FIELD_NAME);
 
