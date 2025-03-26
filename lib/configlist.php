@@ -1,6 +1,6 @@
 <?php
 
-namespace Bx\Otel\Router;
+namespace  Bx\Router\Otel;
 
 class ConfigList
 {
