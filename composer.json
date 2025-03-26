@@ -1,5 +1,5 @@
 {
-  "name": "beta/bx.router.base",
+  "name": "beta/bx.router.otel",
   "type": "bitrix-module",
   "authors": [
     {
