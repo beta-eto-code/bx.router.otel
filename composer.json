@@ -25,5 +25,6 @@
       "php-http/discovery": true,
       "tbachert/spi": true
     }
-  }
+  },
+  "minimum-stability": "dev"
 }
