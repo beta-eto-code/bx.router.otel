@@ -19,7 +19,7 @@ class BxOTelEventListener
             $otelSpanManager = OTelManager::getInstance();
             $otelSpanManager->addSpanEvent(
                 $otelEvent->getSpanName(),
-                $otelEvent->getName(),
+                $otelEvent->getEventName(),
                 $otelEvent->getAttributes(),
             );
         }
