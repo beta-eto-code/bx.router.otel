@@ -3,6 +3,7 @@
 namespace Bx\Router\Otel;
 
 use Exception;
+use Otel\Base\Interfaces\OTelSpanManagerInterface;
 use Otel\Base\OTelFactory;
 use Otel\Base\OTelRegistry;
 use Otel\Base\OTelSpanManager;
@@ -18,7 +19,7 @@ class OTelManager
     /**
      * @throws Exception
      */
-    public static function getInstance(): OTelSpanManager
+    public static function getInstance(): OTelSpanManagerInterface
     {
 
         if (is_null(self::$instance)) {

@@ -17,44 +17,7 @@ $mid = 'bx.router.otel';
 
 Loc::loadMessages(__FILE__);
 Loader::includeModule($mid);
-$options = [
-    [
-        'tab' => "Телеметрия",
-        'options' => [
-            ConfigList::USE_OTEL => [
-                'label' => 'Включить профилирование запросов',
-                'name' => ConfigList::USE_OTEL,
-                'type' => 'checkbox',
-                'multiple' => false
-            ],
-            ConfigList::OTEL_HOST => [
-                'label' => 'Адрес OTEL сервера',
-                'name' => ConfigList::OTEL_HOST,
-                'type' => 'string',
-                'multiple' => false
-            ],
-            ConfigList::OTEL_LOGIN => [
-                'label' => 'Логин OTEL сервера',
-                'name' => ConfigList::OTEL_LOGIN,
-                'type' => 'string',
-                'multiple' => false
-            ],
-
-            ConfigList::OTEL_PASSWORD => [
-                'label' => 'Пароль OTEL сервера',
-                'name' => ConfigList::OTEL_PASSWORD,
-                'type' => 'string',
-                'multiple' => false
-            ],
-            ConfigList::OTEL_URLS => [
-                'label' => 'Список URL разрешенных для отправки в OTEL (по-умолчанию все разрешены)',
-                'name' => ConfigList::OTEL_URLS,
-                'type' => 'string',
-                'multiple' => true
-            ],
-        ],
-    ],
-];
+$options = ConfigList::getOptionsTab();
 
 $optionsMap = [];
 $optionJson = [];

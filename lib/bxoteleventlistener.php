@@ -13,12 +13,6 @@ class BxOTelEventListener
 
     public static function onOTelEvent(Event $event): void
     {
-        $isEnabled = Option::get('bx.router.otel', ConfigList::USE_OTEL, 'Y') == 'Y';
-
-        if (!$isEnabled) {
-            return;
-        }
-
         /** @var OtelEvent $otelEvent */
         $otelEvent = $event->getParameter(self::EVENT_FIELD_NAME);
 

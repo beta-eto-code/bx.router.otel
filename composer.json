@@ -8,7 +8,7 @@
     }
   ],
   "require": {
-    "beta/bx.otel.base": "dev-develop"
+    "beta/bx.otel.base": "*"
   },
   "autoload": {
     "classmap": ["lib/"]
@@ -28,6 +28,5 @@
       "php-http/discovery": true,
       "tbachert/spi": true
     }
-  },
-  "minimum-stability": "dev"
+  }
 }
