@@ -16,6 +16,7 @@ class BxOTelPageListener
                 [
                     'url' => $request->getRequestUri(),
                     'method' => $request->getRequestMethod(),
+                    'session' => session_id()
                 ],
                 'root'
             )
