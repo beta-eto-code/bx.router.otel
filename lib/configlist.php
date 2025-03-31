@@ -4,7 +4,7 @@ namespace Bx\Router\Otel;
 
 class ConfigList
 {
-    const MODULE_NAME = 'bx_router_otel';
+    const MODULE_NAME = 'bx.router.otel';
     const USE_OTEL = 'USE_OTEL';
     const OTEL_URLS = 'OTEL_URLS';
     const OTEL_HOST = 'OTEL_HOST';

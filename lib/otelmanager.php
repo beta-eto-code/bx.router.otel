@@ -4,13 +4,11 @@ namespace Bx\Router\Otel;
 
 use Exception;
 use Otel\Base\Interfaces\OTelSpanManagerInterface;
-use Otel\Base\OTelFactory;
 use Otel\Base\OTelRegistry;
-use Otel\Base\OTelSpanManager;
 
 class OTelManager
 {
-    private static ?OTelSpanManager $instance = null;
+    private static ?OTelSpanManagerInterface $instance = null;
 
     private function __construct()
     {
@@ -24,8 +22,8 @@ class OTelManager
 
         if (is_null(self::$instance)) {
             if (!OTelRegistry::has('default')) {
-                $factory = new OTelFactory();
-                $otelSpanManager = $factory->createDefault();
+
+                $otelSpanManager = BxRouterOTelSpanManager::factory();
                 $otelSpanManager->startRootSpan();
 
                 OTelRegistry::register('default', $otelSpanManager);
