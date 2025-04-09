@@ -10,6 +10,7 @@ use OpenTelemetry\Contrib\Otlp\ContentTypes;
 use OpenTelemetry\Contrib\Otlp\OtlpHttpTransportFactory;
 use OpenTelemetry\Contrib\Otlp\SpanExporter;
 use OpenTelemetry\SDK\Common\Export\Stream\StreamTransport;
+use OpenTelemetry\SDK\Common\Http\Psr\Client\Discovery;
 use OpenTelemetry\SDK\Trace\SpanExporter\ConsoleSpanExporter;
 use OpenTelemetry\SDK\Trace\SpanProcessor\SimpleSpanProcessor;
 use OpenTelemetry\SDK\Trace\TracerProvider;
@@ -163,6 +164,12 @@ class BxRouterOTelSpanManager extends OTeBaselSpanManager
 
         try {
             if ($options[ConfigList::OTEL_HOST]) {
+                if ($options[ConfigList::OTEL_SSL_VERIFY_DISABLE]) {
+                    Discovery::setDiscoverers([
+                        \Bx\Router\Otel\GuzzleNonSSLDiscovery::class
+                    ]);
+                }
+
                 $transport = (new OtlpHttpTransportFactory())
                     ->create($options[ConfigList::OTEL_HOST], ContentTypes::JSON);
                 $exporter = new SpanExporter($transport);

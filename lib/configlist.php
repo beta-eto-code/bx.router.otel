@@ -8,6 +8,7 @@ class ConfigList
     const USE_OTEL = 'USE_OTEL';
     const OTEL_URLS = 'OTEL_URLS';
     const OTEL_HOST = 'OTEL_HOST';
+    const OTEL_SSL_VERIFY_DISABLE = 'OTEL_SSL_VERIFY_DISABLE';
     const OTEL_LOGIN = 'OTEL_LOGIN';
     const OTEL_PASSWORD = 'OTEL_PASSWORD';
 
@@ -27,6 +28,15 @@ class ConfigList
                         'label' => 'Адрес OTEL сервера',
                         'name' => ConfigList::OTEL_HOST,
                         'type' => 'string',
+                        'multiple' => false,
+                        'validator' => function ($value) {
+                             return filter_var($value, FILTER_VALIDATE_URL);
+                        }
+                    ],
+                    ConfigList::OTEL_SSL_VERIFY_DISABLE => [
+                        'label' => 'Отключить проверку SSL сертификата',
+                        'name' => ConfigList::OTEL_SSL_VERIFY_DISABLE,
+                        'type' => 'checkbox',
                         'multiple' => false
                     ],
                     ConfigList::OTEL_LOGIN => [

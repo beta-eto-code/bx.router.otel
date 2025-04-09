@@ -13,7 +13,7 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Bx\Router\Otel\ConfigList;
 
-$mid = ConfigList::MODULE_NAME;
+$mid = 'bx.router.otel';
 
 Loc::loadMessages(__FILE__);
 Loader::includeModule($mid);
@@ -22,6 +22,7 @@ $options = ConfigList::getOptionsTab();
 $optionsMap = [];
 $optionJson = [];
 $optionNames = [];
+$optionValidators = [];
 foreach ($options as $optionTab) {
     foreach ($optionTab['options'] as $name => $value) {
         if (is_string($value)) {
@@ -41,6 +42,10 @@ foreach ($options as $optionTab) {
                     $optionJson[] = $name;
                 }
             }
+        }
+
+        if (is_callable($value['validator'])) {
+            $optionValidators[$name] = $value['validator'];
         }
     }
 }
@@ -78,6 +83,14 @@ if ($isSave && check_bitrix_sessid()) {
         } elseif ($isMultiple) {
             $value = json_encode($value);
         }
+        if (array_key_exists($name, $optionValidators) && is_callable($optionValidators[$name])) {
+            if (!$optionValidators[$name]($value)) {
+                $APPLICATION->ThrowException("Invalid value for option {$name}");
+                Option::set($mid, $name, "");
+                continue;
+            }
+        }
+
         Option::set($mid, $name, "{$value}");
     }
 }
@@ -95,6 +108,9 @@ $aTabs = array_map(function ($item) {
 
 $tabControl = new CAdminTabControl('tabControl', $aTabs);
 $actionUrl = $APPLICATION->GetCurPage() . "?mid=" . urlencode($mid) . "&lang=" . LANGUAGE_ID;
+if ($e = $APPLICATION->GetException()) {
+    CAdminMessage::ShowMessage($e->GetString());
+}
 
 ?>
 <form method="post" action="<?= $actionUrl ?>">

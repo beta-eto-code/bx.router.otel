@@ -3,6 +3,7 @@
 namespace Bx\Router\Otel;
 
 use Exception;
+use OpenTelemetry\SDK\Common\Http\Psr\Client\Discovery;
 use Otel\Base\Interfaces\OTelSpanManagerInterface;
 use Otel\Base\OTelRegistry;
 
@@ -22,6 +23,7 @@ class OTelManager
 
         if (is_null(self::$instance)) {
             if (!OTelRegistry::has('default')) {
+
 
                 $otelSpanManager = BxRouterOTelSpanManager::factory();
                 $otelSpanManager->startRootSpan();
