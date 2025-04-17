@@ -43,6 +43,4 @@ class OtelEvent
     {
         return $this->spanName;
     }
-
-
 }

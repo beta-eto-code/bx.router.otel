@@ -10,7 +10,8 @@ class GuzzleNonSSLDiscovery implements DiscoveryInterface
 {
     public function available(): bool
     {
-        return class_exists(Client::class) && is_a(Client::class, ClientInterface::class, true);
+        return class_exists(Client::class) &&
+            is_a(Client::class, ClientInterface::class, true);
     }
 
     public function create(mixed $options): ClientInterface

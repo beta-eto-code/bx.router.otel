@@ -5,6 +5,7 @@ IncludeModuleLangFile(__FILE__);
 use Bitrix\Main\EventManager;
 use Bitrix\Main\ModuleManager;
 use Bx\Router\Otel\BxOTelPageListener;
+use Bx\Router\Otel\Event\EventHandler;
 
 
 class bx_router_otel extends CModule
@@ -45,15 +46,8 @@ class bx_router_otel extends CModule
             'main',
             'OnPageStart',
             $this->MODULE_ID,
-            BxOTelPageListener::class,
+            EventHandler::class,
             'onStart'
-        );
-        $eventManager->registerEventHandler(
-            'main',
-            'OnAfterEpilog',
-            $this->MODULE_ID,
-            BxOTelPageListener::class,
-            'onEnd'
         );
     }
 
@@ -64,15 +58,8 @@ class bx_router_otel extends CModule
             'main',
             'OnPageStart',
             $this->MODULE_ID,
-            BxOTelPageListener::class,
+            EventHandler::class,
             'onStart'
-        );
-        $eventManager->unRegisterEventHandler(
-            'main',
-            'OnAfterEpilog',
-            $this->MODULE_ID,
-            BxOTelPageListener::class,
-            'onEnd'
         );
     }
 }

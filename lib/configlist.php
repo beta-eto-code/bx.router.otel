@@ -2,6 +2,8 @@
 
 namespace Bx\Router\Otel;
 
+use Bitrix\Main\Config\Option;
+
 class ConfigList
 {
     const MODULE_NAME = 'bx.router.otel';
@@ -19,7 +21,7 @@ class ConfigList
                 'tab' => "Телеметрия",
                 'options' => [
                     ConfigList::USE_OTEL => [
-                        'label' => 'Включить профилирование запросов',
+                        'label' => 'Включить трейсинг запросов',
                         'name' => ConfigList::USE_OTEL,
                         'type' => 'checkbox',
                         'multiple' => false
@@ -45,7 +47,6 @@ class ConfigList
                         'type' => 'string',
                         'multiple' => false
                     ],
-
                     ConfigList::OTEL_PASSWORD => [
                         'label' => 'Пароль OTEL сервера',
                         'name' => ConfigList::OTEL_PASSWORD,
@@ -61,5 +62,22 @@ class ConfigList
                 ],
             ],
         ];
+    }
+
+    public static function get(string $key, $default = null)
+    {
+        $originalValue = Option::get(static::MODULE_NAME, $key, $default);
+        if (static::isComplexValue($key) && !empty($originalValue)) {
+            return json_decode($originalValue, true) ?: [];
+        }
+
+        return $originalValue;
+    }
+
+    private static function isComplexValue(string $key): bool
+    {
+        return in_array($key, [
+            static::OTEL_URLS,
+        ]);
     }
 }
