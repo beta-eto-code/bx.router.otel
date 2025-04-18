@@ -18,8 +18,8 @@
   },
   "repositories": [
     {
-      "url": "/home/kirill/projects/loodsen/otel/bx.otel",
-      "type": "vcs"
+      "url": "https://github.com/beta-eto-code/bx.otel",
+      "type": "git"
     }
   ],
   "config": {
