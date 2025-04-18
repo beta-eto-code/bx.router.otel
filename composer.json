@@ -8,7 +8,7 @@
     }
   ],
   "require": {
-    "beta/bx.otel": "@dev"
+    "beta/bx.otel": "dev-develop"
   },
   "autoload": {
     "classmap": ["lib/"]
@@ -18,8 +18,8 @@
   },
   "repositories": [
     {
-      "url": "https://github.com/beta-eto-code/bx.otel",
-      "type": "git"
+      "url": "/home/kirill/projects/loodsen/otel/bx.otel",
+      "type": "vcs"
     }
   ],
   "config": {
