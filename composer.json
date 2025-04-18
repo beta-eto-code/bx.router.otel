@@ -8,7 +8,7 @@
     }
   ],
   "require": {
-    "beta/bx.otel": "^1.0"
+    "beta/bx.otel": "@dev"
   },
   "autoload": {
     "classmap": ["lib/"]
