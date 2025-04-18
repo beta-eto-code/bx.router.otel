@@ -2,22 +2,11 @@
 
 namespace Bx\Router\Otel\Event;
 
-use Bx\Otel\Event\BaseEventConfig;
-
-class DefaultEventConfig extends BaseEventConfig
+class DefaultEventConfig extends \Bx\Otel\Event\DefaultEventConfig
 {
     public function getModuleId(): string
     {
         return 'bx.router.otel';
     }
 
-    public function getNewSpanEventName(): string
-    {
-        return 'bx.router.otel.new_span_event';
-    }
-
-    public function getNewSpanName(): string
-    {
-        return 'bx.router.otel.new_span';
-    }
 }
