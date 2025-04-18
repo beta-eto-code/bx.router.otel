@@ -3,16 +3,17 @@
 namespace Bx\Router\Otel\Event;
 
 use Bitrix\Main\Application;
+use Bitrix\Main\Event;
 use Bitrix\Main\EventManager;
 use BitrixPSR7\ServerRequest;
-use Bx\Router\Otel\BxRequestHelper;
-use Bx\Router\Otel\ConfigList;
-use Bx\Router\Otel\OTelFactory;
+use Bx\Otel\BxRequestHelper;
+use Bx\Otel\ConfigList;
+use Bx\Otel\Event\BaseEventConfig;
+use Bx\Otel\OTelFactory;
 use Exception;
 use Otel\Base\Interfaces\OTelSpanManagerInterface;
 use Otel\Base\Util\RequestHelper;
 use Psr\Http\Message\ServerRequestInterface;
-use Bitrix\Main\Event;
 
 class EventHandler
 {
@@ -78,11 +79,6 @@ class EventHandler
      */
     public static function onStart(): void
     {
-        $useOtel = ConfigList::get(ConfigList::USE_OTEL, 'N') === 'Y';
-        if (!$useOtel) {
-            return;
-        }
-
         $bxRequest = Application::getInstance()->getContext()->getRequest();
         $psrRequest = new ServerRequest($bxRequest);
         if (!static::isAllowRequest($psrRequest)) {

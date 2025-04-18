@@ -4,6 +4,7 @@ namespace Bx\Router\Otel\Event;
 
 use Bitrix\Main\Event;
 use Bitrix\Main\EventManager;
+use Bx\Otel\Event\BaseEventConfig;
 use Psr\Http\Message\ServerRequestInterface;
 
 class EventHelper
