@@ -2,6 +2,8 @@
 
 namespace Bx\Router\Otel\Event;
 
+use Bx\Otel\Event\BaseEventConfig;
+
 class DefaultEventConfig extends BaseEventConfig
 {
     public function getModuleId(): string

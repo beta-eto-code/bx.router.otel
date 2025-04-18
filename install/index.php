@@ -2,7 +2,6 @@
 
 IncludeModuleLangFile(__FILE__);
 
-use Bitrix\Main\EventManager;
 use Bitrix\Main\ModuleManager;
 use Bx\Router\Otel\BxOTelPageListener;
 use Bx\Router\Otel\Event\EventHandler;
@@ -21,12 +20,16 @@ class bx_router_otel extends CModule
     {
         $this->MODULE_VERSION = "1.0.0";
         $this->MODULE_VERSION_DATE = "2025-03-25 00:00:00";
-        $this->MODULE_NAME = "BX ROUTER OTEL";
-        $this->MODULE_DESCRIPTION = "Сбор метрик на событиях OnPageStart и OnAfterEpilog";
+        $this->MODULE_NAME = "BxRouterOtel";
+        $this->MODULE_DESCRIPTION = "Сбор метрик через REST API";
     }
 
     public function DoInstall(): bool
     {
+        if (!\Bitrix\Main\Loader::includeModule('bx.otel')) {
+            throw new \Exception('Module bx.otel not installed.');
+        }
+
         $this->registerEvents();
         ModuleManager::RegisterModule($this->MODULE_ID);
         return true;
@@ -41,25 +44,11 @@ class bx_router_otel extends CModule
 
     private function registerEvents(): void
     {
-        $eventManager = EventManager::getInstance();
-        $eventManager->registerEventHandler(
-            'main',
-            'OnPageStart',
-            $this->MODULE_ID,
-            EventHandler::class,
-            'onStart'
-        );
+
     }
 
     private function unregisterEvents(): void
     {
-        $eventManager = EventManager::getInstance();
-        $eventManager->unRegisterEventHandler(
-            'main',
-            'OnPageStart',
-            $this->MODULE_ID,
-            EventHandler::class,
-            'onStart'
-        );
+
     }
 }
