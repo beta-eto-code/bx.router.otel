@@ -20,6 +20,10 @@
     {
       "url": "https://github.com/beta-eto-code/bx.otel",
       "type": "git"
+    },
+    {
+      "url": "https://github.com/beta-eto-code/otel.base",
+      "type": "git"
     }
   ],
   "config": {
