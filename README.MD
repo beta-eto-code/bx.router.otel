@@ -1,5 +1,10 @@
 # OpenTelemetry модуль для использования Bitrix проектах с REST API
 
+**Установка**
+```shell
+composer require beta/bx.router.otel
+```
+
 **Пример описания HTTP контроллера: REST API приложения с интеграцией OpenTelemetry**
 ```php
 use Psr\Http\Message\ServerRequestInterface;
